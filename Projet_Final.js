@@ -186,7 +186,64 @@ const trips = [
     }
 ];
 
-const tickets = []
+const tickets = [
+    {
+        id: 1,
+        tripId: 2,
+        passengerName: "ahmed",
+        seatNumber: 12,
+        price: 90
+    },
+    {
+        id: 2,
+        tripId: 1,
+        passengerName: "sara",
+        seatNumber: 5,
+        price: 25
+    },
+    {
+        id: 3,
+        tripId: 6,
+        passengerName: "youssef",
+        seatNumber: 21,
+        price: 120
+    },
+    {
+        id: 4,
+        tripId: 8,
+        passengerName: "fatima",
+        seatNumber: 8,
+        price: 40
+    },
+    {
+        id: 5,
+        tripId: 11,
+        passengerName: "omar",
+        seatNumber: 17,
+        price: 95
+    },
+    {
+        id: 6,
+        tripId: 14,
+        passengerName: "imane",
+        seatNumber: 3,
+        price: 130
+    },
+    {
+        id: 7,
+        tripId: 19,
+        passengerName: "hamza",
+        seatNumber: 25,
+        price: 100
+    },
+    {
+        id: 8,
+        tripId: 18,
+        passengerName: "nour",
+        seatNumber: 10,
+        price: 60
+    }
+];
 
 
 
@@ -301,7 +358,7 @@ function AcheterUnTicket()
 
 function AfficherLesTickets()
 {
-    for(let i=0 ; i<= tickets.length ; i++)
+    for(let i=0 ; i< tickets.length ; i++)
     console.log(tickets[i])
 }
 
@@ -327,39 +384,78 @@ function AnnulerUnTickets()
 } 
 function RechercheUnTicket()
 {
+    // user enter
     let nom = prompt("Entrer Le Nom De Passager : ")
-    let ticktName = tickets.filter(t => t.PassengerName === nom)
 
-     for(let i=0 ; i< ticktName.length ; i++ )
+    // filtrer tout les noms comme le nom entrer
+
+    let ticktName = tickets.filter(tk => tk.passengerName === nom)
+    //    fin les nom et retourner info traje 
+     for(let i=0 ; i < ticktName.length ; i++ )
      {
-        let depar = trips.find(t => t.id == ticktName.idTrajet).departureTime
-        let desti = trips.find(t => t.id == ticktName.idTrajet).destination
+
+        let trip = trips.find(tr => tr.id == ticktName[i].tripId)
+       
+        if (trip) {
+            console.log(`Ticket # : ${ticktName[i].id}`);
+            console.log(`Passager : ${ticktName[i].passengerName}`);
+            console.log(`Trajet : ${trip.departure} --> ${trip.destination}`);
+            console.log(`Heure : ${trip.departureTime}`);
+            console.log(`Prix : ${ticktName[i].price}DH`);
+            console.log("-----------------------------------");
+        }
      }
-    // console.log(` Ticket : # ${configue.idTicket}  \n Passager : ${passenger} \n Trajet : ${trip.departure} --> ${trip.destination} \n Place : ${trip.availableSeats} \n Prix : ${trip.price}DH`)
-
-     console.log(ticktName)
-
-   
-
+    
 }
 
+function FiltrerLesTrajets() {
+    // user enter
+    let ville = prompt("Ville de depart : ");
+    // filtrer les ville dint le nom de ville entrer
+    let filtreville = trips.filter(fv => fv.departure === ville);
 
+    // if (filtreville.length === 0) {
+    //     console.log("Aucun trajet trouve pour cette ville.");
+    //     return;
+    // }
+     filtreville.forEach(trajet => {
+        console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price}DH `);
+        console.log("-----------------------------------");
+    })
+}
 
+function TrierLesTrajets()
+{
+    for (let i = 0; i < trips.length; i++) {
+        for (let j = 0; j < trips.length - 1 - i; j++) {
+            if (trips[j].price > trips[j + 1].price) {
+                
+                let chnge = trips[j];
+                trips[j]  = trips[j + 1];
+                trips[j + 1] = chnge;
+            }
+        }
+    }
+        trips.forEach(trajet => {console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price} DH`);
+    })
+}
 
+////////////////////////////////////////////////////////////////
 
+function afficherTotalTicketsVendus() {
+    console.log("Nombre total de tickets vendus\n");
+    console.log(`Nombre total de tickets : ${tickets.length}`);
+}
 
+function calculerChiffreAffairesTotal() {
 
+    let total = 0;
 
+    tickets.map(ticket => {total += ticket.price;})
 
-
-
-
-
-
-
-
-
-
+    console.log("Chiffre d'affaires total\n");
+    console.log(`Chiffre d'affaires total : ${total} DH`);
+}
 
 
 
