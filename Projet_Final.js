@@ -353,11 +353,11 @@ function TrierLesTrajets()
 {
     for (let i = 0; i < trips.length; i++) {
         
-        for (let j = 0; j < trips.length - 1 - i; j++) {
-            if (trips[j].price > trips[j + 1].price) {
-                let chnge = trips[j];
-                trips[j]  = trips[j + 1];
-                trips[j + 1] = chnge;
+        for (let j = i+1 ; j < trips.length ; j++) {
+            if (trips[i].price > trips[j].price) {
+                let chnge = trips[i];
+                trips[i]  = trips[j];
+                trips[j] = chnge;
             }
         }
     }
