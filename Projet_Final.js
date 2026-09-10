@@ -257,9 +257,8 @@ function AcheterUnTicket()
         if(trip.availableSeats >= 1)
         {
             //  creation d une ticket
-            
             tickets.push({idTicket : configue.idTicket , PassengerName  : passenger, tripId : idTrajet , seatNumber : trip.availableSeats , Prix : trip.price})
-            
+            // delet one seat from the trip
             trip.availableSeats --
             
             console.log("Ticket achete avec succes\n")
@@ -284,75 +283,57 @@ function AfficherLesTickets()
         // recherche de trip corespendant a chaque ticket
         let trip = trips.find(t => t.id == tickets[i].tripId )
     // affiche les tickets
-    console.log("==================TICKETS===============")
-       console.log(` Ticket : # ${tickets[i].idTicket}  \n Passager : ${tickets[i].PassengerName} \n Trajet : ${trip.departure} --> ${trip.destination} \n Place : ${tickets[i].seatNumber} \n Prix : ${trip.price}DH`)
-       console.log("========================================")
-       }
+    console.log("==================TICKET================")
+    console.log(` Ticket : # ${tickets[i].idTicket}  \n Passager : ${tickets[i].PassengerName} \n Trajet : ${trip.departure} --> ${trip.destination} \n Place : ${tickets[i].seatNumber} \n Prix : ${trip.price}DH`)
+    console.log("========================================")
+    }
     }
     else{ console.log("Aucun Ticket")}
 }
 
 function AnnulerUnTickets()
 {
-
-    
     //User
     let ticket = Number(prompt("Entrer Id De Ticket : "))
+    // find ticket
     let tik = tickets.find(ti => ti.idTicket == ticket)
-    let findex = tickets.findIndex(t => t.idTicket == tik.idTicket)
-
-    console.log(findex)
-    
-     tickets.splice(findex,1)         
+    // find index of ticket
+     if (tik)
+    {  
+     let findex = tickets.findIndex(t => t.idTicket === tik.idTicket)
+          //  add seat
+    trips.find((tr) => tr.id === tickets[findex].tripId).availableSeats += 1;
+          // delete ticket
+    tickets.splice(findex,1)
+    console.log("Ticket Annuler Avec Succee.")
+    }
+    else { console.log("Ticket Introuvable !")}
      
-     let findtrajet = trips.find(tr => tr.idTrajet == tickets[i].tripId) 
-     findtrajet.availableSeats ++
-     
-    // let findTicket = false
-    // for(i=0 ; i < tickets.length ; i++)
-    // {
-    //     // verifier le ticket qu'il exicte
-    //     if(tickets[i].id == ticket)
-    //     {
-    //     //  sup de ticket   
-    //     tickets.splice(i,1)         
-    //     console.log(" Ticket annule avec succes ")
-
-    //     // augmentation de nombre de place
-
-    //    let findtrajet = trips.find(tr => tr.id == tickets[i].tripId) 
-    //   findtrajet.availableSeats ++
-
-    //     findTicket = true
-    //     break;
-
-    //    }
-    // }
-    // if(findTicket = false){console.log(" Ticket introvable !! ")}
 } 
 function RechercheUnTicket()
 {
     // user enter
     let nom = prompt("Entrer Le Nom De Passager : ")
+    // filter names and gives the name that the user has enter 
+    let ticktName = tickets.filter(tk => tk.PassengerName === nom)
 
-    // filtrer tout les noms comme le nom entrer
-
-    let ticktName = tickets.filter(tk => tk.passengerName === nom)
-    //    fin les nom et retourner info traje 
+    if(ticktName.length > 0){
+       //find names and return trip info
      for(let i=0 ; i < ticktName.length ; i++ )
      {
-
+        //     
         let trip = trips.find(tr => tr.id == ticktName[i].tripId)
        
-        if (trip) {
-            console.log(`Ticket # : ${ticktName[i].id}`);
-            console.log(`Passager : ${ticktName[i].passengerName}`);
+        if (trip != undefined) {
+            console.log(`Ticket # : ${ticktName[i].idTicket}`);
+            console.log(`Passager : ${ticktName[i].PassengerName}`);
             console.log(`Trajet : ${trip.departure} --> ${trip.destination}`);
             console.log(`Heure : ${trip.departureTime}`);
-            console.log(`Prix : ${ticktName[i].price}DH`);
+            console.log(`Prix : ${ticktName[i].Prix}DH`);
             console.log("-----------------------------------");
         }
      }
+    }  else {console.log(`il n'ya pas de ticket avec le nom : ${nom}`)}
     
 }
 
@@ -362,10 +343,6 @@ function FiltrerLesTrajets() {
     // filtrer les ville dint le nom de ville entrer
     let filtreville = trips.filter(fv => fv.departure === ville);
 
-    // if (filtreville.length === 0) {
-    //     console.log("Aucun trajet trouve pour cette ville.");
-    //     return;
-    // }
      filtreville.forEach(trajet => {
         console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price}DH `);
         console.log("-----------------------------------");
@@ -374,21 +351,24 @@ function FiltrerLesTrajets() {
 
 function TrierLesTrajets()
 {
+    
     for (let i = 0; i < trips.length; i++) {
+        
         for (let j = 0; j < trips.length - 1 - i; j++) {
             if (trips[j].price > trips[j + 1].price) {
-                
                 let chnge = trips[j];
                 trips[j]  = trips[j + 1];
                 trips[j + 1] = chnge;
             }
+            
         }
     }
-        trips.forEach(trajet => {console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price} DH`);
+          console.log("------------------Trajet-----------------");
+        trips.forEach(trajet => {console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price} DH \n -------------- `);
     })
 }
 
-////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
 
 function afficherTotalTicketsVendus() {
     console.log("Nombre total de tickets vendus\n");
