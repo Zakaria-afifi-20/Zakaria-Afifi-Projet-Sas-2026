@@ -187,62 +187,20 @@ const trips = [
 ];
 
 const tickets = [
-    {
-        id: 1,
-        tripId: 2,
-        passengerName: "ahmed",
-        seatNumber: 12,
-        price: 90
-    },
-    {
-        id: 2,
-        tripId: 1,
-        passengerName: "sara",
-        seatNumber: 5,
-        price: 25
-    },
-    {
-        id: 3,
-        tripId: 6,
-        passengerName: "youssef",
-        seatNumber: 21,
-        price: 120
-    },
-    {
-        id: 4,
-        tripId: 8,
-        passengerName: "fatima",
-        seatNumber: 8,
-        price: 40
-    },
-    {
-        id: 5,
-        tripId: 11,
-        passengerName: "omar",
-        seatNumber: 17,
-        price: 95
-    },
-    {
-        id: 6,
-        tripId: 14,
-        passengerName: "imane",
-        seatNumber: 3,
-        price: 130
-    },
-    {
-        id: 7,
-        tripId: 19,
-        passengerName: "hamza",
-        seatNumber: 25,
-        price: 100
-    },
-    {
-        id: 8,
-        tripId: 18,
-        passengerName: "nour",
-        seatNumber: 10,
-        price: 60
-    }
+    // {
+    //     id: 1,
+    //     tripId: 2,
+    //     passengerName: "ahmed",
+    //     seatNumber: 12,
+    //     price: 90
+    // },
+    // {
+    //     id: 2,
+    //     tripId: 1,
+    //     passengerName: "sara",
+    //     seatNumber: 5,
+    //     price: 25
+    // }
 ];
 
 
@@ -331,30 +289,7 @@ function AcheterUnTicket()
 }
 
 
-// function AcheterUnTicket()
-// {
-//     // user
-//     const passenger = prompt("Entrer Votre Nom : ")
-//     const idTrajet = Number(prompt("Entrer Id de Trajet Que Vous Avez Choisissez : "))
-    
-//     for(let i=0 ; i< trips.length ;i++)
-//     {
-//         let id 
-//         // verifier le trajet
-//         if(idTrajet == trips[i].id)
-//         {
-//             // verifier de place
-//             if(trips[i].availableSeats > 0)
-//             {   // creation d une ticket
-//               tickets.push({id : id , PassengerName  : passenger, tripId : idTrajet , seatNumber : trips[i].availableSeats , Prix : trips[i].price})
-//                 id++
-//               trips[i].availableSeats --
-//             }
-//             else  {console.log("Train complet.")}
-//         }else  {console.log("Trajet introuvable.")}
-//     }
-    
-// }
+
 
 function AfficherLesTickets()
 {
@@ -366,21 +301,28 @@ function AnnulerUnTickets()
 {
     //User
     let ticket = Number(prompt("Entrer Id De Ticket : "))
-
-    for(i=0 ; i <= tickets.length ; i++)
+    let findTicket = false
+    for(i=0 ; i < tickets.length ; i++)
     {
-            // verifier le ticket qu'il exicte
+        // verifier le ticket qu'il exicte
         if(tickets[i].id == ticket)
         {
-        //  sup de ticket
-         tickets.splice(tickets[i],1)       
-         console.log(" Ticket annule avec succes ")
+        //  sup de ticket   
+        tickets.splice(i,1)         
+        console.log(" Ticket annule avec succes ")
 
         // augmentation de nombre de place
-         tickets[i].tripId.seatNumber ++
 
-       }else{console.log(" Ticket introvable !! ")}
+       let findtr = trips.find(tr => tr.id == tickets[i].tripId) 
+
+        findtr.availableSeats ++
+
+        findTicket = true
+        break;
+
+       }
     }
+    if(findTicket = false){console.log(" Ticket introvable !! ")}
 } 
 function RechercheUnTicket()
 {
@@ -463,7 +405,7 @@ function calculerChiffreAffairesTotal() {
 
 function Menu() {
     console.log(`=================================`)
-     console.log(`      RAILWAY MANAGER`)
+    console.log(`         RAILWAY MANAGER`)
     console.log(`=================================`)
     console.log(`       Menu : `);
     console.log(` 1 => Afficher les trajets  `);
