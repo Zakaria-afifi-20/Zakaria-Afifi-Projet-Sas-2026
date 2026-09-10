@@ -189,7 +189,6 @@ const trips = [
 const tickets = [];
 
 
-
 do {
     Menu()
 
@@ -232,12 +231,16 @@ function SelectChoix(choix) {
             TrierLesTrajets()
             break
         }
+        case 8: {
+            afficherTotalTicketsVendus()
+            calculerChiffreAffairesTotal()
+            break
+        }
         default: {
             console.log("choix pas exist !");
         }
     }
 }
-
 
 function AffichageLesTrajets()
 {
@@ -256,9 +259,9 @@ function AcheterUnTicket()
     {
         if(trip.availableSeats >= 1)
         {
-            //  creation d une ticket
+            
             tickets.push({idTicket : configue.idTicket , PassengerName  : passenger, tripId : idTrajet , seatNumber : trip.availableSeats , Prix : trip.price})
-            // delet one seat from the trip
+            
             trip.availableSeats --
             
             console.log("Ticket achete avec succes\n")
@@ -272,17 +275,14 @@ function AcheterUnTicket()
     
 }
 
-
-
-
 function AfficherLesTickets()
 {
-   //  verifier que les tickets sont dispo
+
     if(tickets.length > 0)
     { for(let i=0 ; i< tickets.length ; i++){
-        // recherche de trip corespendant a chaque ticket
+        
         let trip = trips.find(t => t.id == tickets[i].tripId )
-    // affiche les tickets
+    
     console.log("==================TICKET================")
     console.log(` Ticket : # ${tickets[i].idTicket}  \n Passager : ${tickets[i].PassengerName} \n Trajet : ${trip.departure} --> ${trip.destination} \n Place : ${tickets[i].seatNumber} \n Prix : ${trip.price}DH`)
     console.log("========================================")
@@ -310,11 +310,11 @@ function AnnulerUnTickets()
     else { console.log("Ticket Introuvable !")}
      
 } 
+
 function RechercheUnTicket()
 {
-    // user enter
+    
     let nom = prompt("Entrer Le Nom De Passager : ")
-    // filter names and gives the name that the user has enter 
     let ticktName = tickets.filter(tk => tk.PassengerName === nom)
 
     if(ticktName.length > 0){
@@ -324,7 +324,7 @@ function RechercheUnTicket()
         //     
         let trip = trips.find(tr => tr.id == ticktName[i].tripId)
        
-        if (trip != undefined) {
+        if (trip) {
             console.log(`Ticket # : ${ticktName[i].idTicket}`);
             console.log(`Passager : ${ticktName[i].PassengerName}`);
             console.log(`Trajet : ${trip.departure} --> ${trip.destination}`);
@@ -351,7 +351,6 @@ function FiltrerLesTrajets() {
 
 function TrierLesTrajets()
 {
-    
     for (let i = 0; i < trips.length; i++) {
         
         for (let j = 0; j < trips.length - 1 - i; j++) {
@@ -360,10 +359,9 @@ function TrierLesTrajets()
                 trips[j]  = trips[j + 1];
                 trips[j + 1] = chnge;
             }
-            
         }
     }
-          console.log("------------------Trajet-----------------");
+        console.log("------------------Trajet-----------------");
         trips.forEach(trajet => {console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price} DH \n -------------- `);
     })
 }
@@ -371,23 +369,18 @@ function TrierLesTrajets()
 ///////////////////////////////////////////////////////////////////////////////////////////
 
 function afficherTotalTicketsVendus() {
-    console.log("Nombre total de tickets vendus\n");
-    console.log(`Nombre total de tickets : ${tickets.length}`);
+    console.log("--------Nombre total de tickets vendus--------\n")
+    console.log(`Nombre total de tickets : ${tickets.length}`)
 }
 
 function calculerChiffreAffairesTotal() {
 
     let total = 0;
 
-    tickets.map(ticket => {total += ticket.price;})
-
-    console.log("Chiffre d'affaires total\n");
-    console.log(`Chiffre d'affaires total : ${total} DH`);
+    tickets.map(ticket => {total = total + ticket.price;})
+    console.log("--------Chiffre d'affaires total--------\n");
+    console.log(`Chiffre d'affaires total : ${total} DH`)
 }
-
-
-
-
 
 function Menu() {
     console.log(`=================================`)
@@ -401,6 +394,7 @@ function Menu() {
     console.log(` 5 => Rechercher un ticket   `);
     console.log(` 6 => Filtrer les trajets  `);
     console.log(` 7 => Trier les trajets  `);
+    console.log(` 8 => Statistiques  `);
     console.log(` 0 => Quitter   `);
 
 }
