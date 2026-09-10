@@ -355,9 +355,9 @@ function TrierLesTrajets()
         
         for (let j = i+1 ; j < trips.length ; j++) {
             if (trips[i].price > trips[j].price) {
-                let chnge = trips[i];
-                trips[i]  = trips[j];
-                trips[j] = chnge;
+                let grand = trips[i]
+                trips[i]  = trips[j]
+                trips[j] = grand
             }
         }
     }
