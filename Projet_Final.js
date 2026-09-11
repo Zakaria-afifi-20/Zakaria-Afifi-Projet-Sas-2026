@@ -338,32 +338,40 @@ function RechercheUnTicket()
 }
 
 function FiltrerLesTrajets() {
-    // user enter
-    let ville = prompt("Ville de depart : ");
+
+     let ville = prompt("Ville de depart : ");
     // filtrer les ville dint le nom de ville entrer
     let filtreville = trips.filter(fv => fv.departure === ville);
-
-     filtreville.forEach(trajet => {
+     if(filtreville.length>0)
+     {
+        filtreville.forEach(trajet => {
         console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price}DH `);
-        console.log("-----------------------------------");
-    })
+        console.log("-----------------------------------");})
+    } 
+   
+     else { console.log("Nom de ville introuvable !")}
 }
 
 function TrierLesTrajets()
 {
-    for (let i = 0; i < trips.length; i++) {
+    for (let i = 0; i < trips.length; i++)
+    {
         
         for (let j = i+1 ; j < trips.length ; j++) {
-            if (trips[i].price > trips[j].price) {
+            if (trips[i].price > trips[j].price)
+            {
                 let grand = trips[i]
                 trips[i]  = trips[j]
                 trips[j] = grand
             }
         }
     }
+    for (let i = 0; i < trips.length - 1; i++) 
+    {
         console.log("------------------Trajet-----------------");
-        trips.forEach(trajet => {console.log(`${trajet.departure} --> ${trajet.destination} : ${trajet.price} DH \n -------------- `);
-    })
+        console.log(`${trips[i].departure} -> ${trips[i].destination} : ${trips[i].price} DH`)
+        console.log( )
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
