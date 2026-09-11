@@ -369,6 +369,7 @@ function TrierLesTrajets()
     for (let i = 0; i < trips.length - 1; i++) 
     {
         console.log("------------------Trajet-----------------");
+        console.log( )
         console.log(`${trips[i].departure} -> ${trips[i].destination} : ${trips[i].price} DH`)
         console.log( )
     }
